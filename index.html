@@ -28,39 +28,98 @@
             <div class="fxs_detail">
               <!---widget--->
               <script>
+                document.addEventListener(
+                  "touchstart",
+                  handleTouchStart,
+                  false
+                );
+                document.addEventListener("touchmove", handleTouchMove, false);
+
+                var xDown = null;
+                var yDown = null;
+
+                function getTouches(evt) {
+                  return evt.touches || evt.originalEvent.touches;
+                }
+
+                function handleTouchStart(evt) {
+                  const firstTouch = getTouches(evt)[0];
+                  xDown = firstTouch.clientX;
+                  yDown = firstTouch.clientY;
+                }
+
+                function handleTouchMove(evt) {
+                  if (!xDown || !yDown) {
+                    return;
+                  }
+
+                  var xUp = evt.touches[0].clientX;
+                  var yUp = evt.touches[0].clientY;
+
+                  var xDiff = xDown - xUp;
+                  var yDiff = yDown - yUp;
+
+                  if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                    if (xDiff > 0) {
+                      slide(0);
+                    } else {
+                      slide(-1);
+                    }
+                  } else {
+                    if (yDiff > 0) {
+                      console.log("swipe up");
+                    } else {
+                      console.log("swipe down");
+                    }
+                  }
+                  xDown = null;
+                  yDown = null;
+                }
+
                 function deployOnboarding() {
-                  document.querySelector("#fxs_undeployed").style.display =
-                    "none";
-                  document.querySelector("#fxs_deployed").style.display =
-                    "block";
+
+                  let undeployed = document.querySelector("#fxs_undeployed");
+
+                  undeployed.style.display="none";
+
+                  let deployed = document.querySelector("#fxs_deployed");
+
+                  deployed.style.display="block";
                 }
+
                 function undeployOnboarding() {
-                  document.querySelector("#fxs_undeployed").style.display =
-                    "flex";
-                  document.querySelector("#fxs_deployed").style.display =
-                    "none";
+
+                  let undeployed = document.querySelector("#fxs_undeployed");
+
+                  undeployed.style.display="flex";
+
+                  let deployed = document.querySelector("#fxs_deployed");
+
+                  deployed.style.display="none";
+
                 }
+
                 let position = 0;
                 let active = 1;
                 function slide(directionOrPosition) {
-                  if(directionOrPosition>0){
+                  if (directionOrPosition > 0) {
                     active = directionOrPosition;
-                  }else{
-                    if(directionOrPosition === 0){
-                        if(active<3){
-                            active++;
-                        }else{
-                            active=1;
-                        }
-                    }else{
-                        if(active>1){
-                            active--;
-                        }else{
-                            active=3;
-                        }
+                  } else {
+                    if (directionOrPosition === 0) {
+                      if (active < 3) {
+                        active++;
+                      } else {
+                        active = 1;
+                      }
+                    } else {
+                      if (active > 1) {
+                        active--;
+                      } else {
+                        active = 3;
+                      }
                     }
                   }
-                  position = ((active - 1)*-100) ;
+                  position = (active - 1) * -100;
 
                   document.querySelector(
                     ".fxs_rail_container_inner"
@@ -82,88 +141,250 @@
                   width: calc(100% + 2rem);
                   display: block;
                 }
-                @media (min-width: 680px) {
+
+                @media (min-width: 768px) {
                   .fxs_signals_onboarding {
                     margin: -1.5rem;
                     width: calc(100% + 3rem);
                   }
                 }
+
                 .fxs_signals_onboarding .fas,
                 .fxs_signals_onboarding .far {
                   font-size: 1rem;
                   vertical-align: middle;
                 }
-                @media (min-width: 680px) {
+
+                @media (min-width: 768px) {
                   .fxs_signals_onboarding .fas {
                     font-size: 1.2rem;
                   }
                 }
+
                 .fxs_signals_onboarding .fa-times,
                 .fxs_signals_onboarding .fa-plus {
                   cursor: pointer;
                 }
+
+                .fxs_signals_onboarding .fa-plus {
+                  position: relative;
+                  right: -1rem;
+                }
+
                 .fxs_undeployed {
                   width: 100%;
                   display: flex;
                   justify-content: space-between;
-                  padding: 1rem 1rem 1rem 2rem;
+                  padding: 1rem 2rem;
                   display: none;
                   cursor: pointer;
                 }
+
                 .fxs_deployed {
                   position: relative;
                 }
+
+              /*   .fxs_fade-in-down {
+                  -webkit-animation: fadeInDown 1s ease-in 1s forwards;
+                  -moz-animation: fadeInDown 1s ease-in 1s forwards;
+                  -o-animation: fadeInDown 1s ease-in 1s forwards;
+                  animation: fadeInDown 1s ease-in 1s forwards;
+                }
+
+                @-webkit-keyframes fadeOutUp {
+                  from {
+                    -webkit-transform: translate3d(0, 0%, 0);
+                    height: auto;
+                    opacity: 1;
+                  }
+
+                  to {
+                    -webkit-transform: translate3d(0, -100%, 0);
+                    height: 0;
+                    opacity: 0;
+                  }
+                }
+
+                @-moz-keyframes fadeOutUp {
+                  from {
+                    -moz-transform: translate3d(0, 0%, 0);
+                    height: auto;
+                    opacity: 1;
+                  }
+                  to {
+                    -moz-transform: translate3d(0, -100%, 0);
+                    height: 0;
+                    opacity: 0;
+                  }
+                }
+
+                @-o-keyframes fadeOutUp {
+                  from {
+                    -o-transform: translate3d(0, 0%, 0);
+                    height: auto;
+                    opacity: 1;
+                  }
+                  to {
+                    -o-transform: translate3d(0, -100%, 0);
+                    height: 0;
+                    opacity: 0;
+                  }
+                }
+
+                @keyframes fadeOutUp {
+                  from {
+                    -webkit-transform: translate3d(0, 0%, 0);
+                    -moz-transform: translate3d(0, 0%, 0);
+                    -ms-transform: translate3d(0, 0%, 0);
+                    transform: translate3d(0, 0%, 0);
+                    height: auto;
+                    opacity: 1;
+                  }
+                  to {
+                    -webkit-transform: translate3d(0, -100%, 0);
+                    -moz-transform: translate3d(0, -100%, 0);
+                    -ms-transform: translate3d(0, -100%, 0);
+                    transform: translate3d(0, -100%, 0);
+                    height: 0;
+                    opacity: 0;
+                  }
+                }
+
+                [not-existing] {
+                  zoom: 1;
+                }
+
+                .fxs_fade-out-up {
+                  -webkit-animation: fadeOutUp 1s ease-out 0 forwards;
+                  -moz-animation: fadeOutUp 1s ease-out 0 forwards;
+                  -o-animation: fadeOutUp 1s ease-out 0 forwards;
+                  animation: fadeOutUp 1s ease-out 0 forwards;
+                } */
+
                 .fxs_deployed .fa-times {
                   position: absolute;
                   right: 1rem;
                   top: 1rem;
                 }
 
-                .fxs_deployed .fa-chevron-left {
-                  position: absolute;
-                  left: 2rem;
-                  top: 50%;
-                  cursor: pointer;
-                }
+                .fxs_deployed .fa-chevron-left,
                 .fxs_deployed .fa-chevron-right {
-                  position: absolute;
-                  right: 2rem;
-                  top: 50%;
-                  cursor: pointer;
+                  display: none;
+                  color: black;
                 }
-                
+
+                @media (min-width: 768px) {
+                  .fxs_deployed .fa-chevron-left {
+                    display: block;
+                    position: absolute;
+                    left: 2rem;
+                    top: 50%;
+                    cursor: pointer;
+                  }
+
+                  .fxs_deployed .fa-chevron-right {
+                    display: block;
+                    position: absolute;
+                    right: 2rem;
+                    top: 50%;
+                    cursor: pointer;
+                  }
+                }
+
                 .fxs_bullets {
                   position: absolute;
-                  bottom: 2rem;
+                  bottom: 0;
                   left: 50%;
                   transform: translateX(-50%);
+                  line-height: 2rem;
                 }
+
                 .fas.fa-circle,
                 .far.fa-circle {
                   font-size: 0.5rem;
                   cursor: pointer;
                 }
+
                 .fxs_rail_container {
                   width: 100%;
                   overflow: hidden;
                 }
+
                 .fxs_rail_container_inner {
                   width: 300%;
                   display: flex;
                   position: relative;
                   transition: left 1s ease-in-out;
-                  padding: 4rem 0;
+                  padding: 1rem 0;
                 }
+
                 .fxs_slide_rail {
                   display: flex;
                   width: 100%;
                   justify-content: center;
                   align-items: center;
-                  padding: 1vw 10vw;
+                  padding: 1rem 2rem 1.5rem 1rem;
                 }
+
+                @media (min-width: 768px) {
+                  .fxs_slide_rail {
+                    padding: 1rem 10vw;
+                  }
+                }
+
                 .fxs_slide_rail .fxs_left {
-                  width: 15vw;
+                  width: 100px;
                   margin-right: 2vw;
+                  align-self: start;
+                }
+
+                @media (min-width: 768px) {
+                  .fxs_slide_rail .fxs_left {
+                    width: 200px;
+                    align-self: inherit;
+                  }
+                }
+
+                .fxs_slide_rail .fxs_right {
+                  align-self: start;
+                }
+
+                @media (min-width: 768px) {
+                  .fxs_slide_rail .fxs_right {
+                    align-self: inherit;
+                  }
+                }
+
+                .fxs_headline_from_medium_to_large {
+                  font-size: 0.9rem;
+                  line-height: 1.35em;
+                }
+
+                @media (min-width: 768px) {
+                  .fxs_headline_from_medium_to_large {
+                    font-size: 1.55rem;
+                    line-height: 1.6rem;
+                  }
+                }
+
+                .fxs_entryPlain_txt_large {
+                  font-size: 0.8rem;
+                }
+
+                @media (min-width: 768px) {
+                  .fxs_entryPlain_txt_large {
+                    font-size: 1rem;
+                  }
+                }
+
+                .fxs_btn.fxs_btn_line.fxs_btn_small {
+                  font-size: 0.8rem;
+                }
+
+                @media (min-width: 768px) {
+                  .fxs_btn.fxs_btn_line.fxs_btn_small {
+                    font-size: 0.92rem;
+                  }
                 }
               </style>
               <div class="fxs_signals_onboarding fxs_bg_success_light_5_clr">
@@ -267,9 +488,21 @@
                     onclick="slide(0);"
                   ></i>
                   <div class="fxs_bullets">
-                    <i class="fas fa-circle" id="circle1" onclick="slide(1)"></i>
-                    <i class="far fa-circle" id="circle2" onclick="slide(2)"></i>
-                    <i class="far fa-circle" id="circle3" onclick="slide(3)"></i>
+                    <i
+                      class="fas fa-circle"
+                      id="circle1"
+                      onclick="slide(1)"
+                    ></i>
+                    <i
+                      class="far fa-circle"
+                      id="circle2"
+                      onclick="slide(2)"
+                    ></i>
+                    <i
+                      class="far fa-circle"
+                      id="circle3"
+                      onclick="slide(3)"
+                    ></i>
                   </div>
                 </div>
               </div>
