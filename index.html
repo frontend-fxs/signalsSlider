@@ -274,20 +274,21 @@
                 }
 
                 @media (min-width: 768px) {
-                  .fxs_deployed .fa-chevron-left {
-                    display: block;
+                  .fxs_deployed .fa-chevron-left,
+                .fxs_deployed .fa-chevron-right {
+                  display: block;
                     position: absolute;
                     left: 2rem;
                     top: 50%;
                     cursor: pointer;
+                    transform:translateY(-50%);
+                }
+                  .fxs_deployed .fa-chevron-left {
+                    left: 2rem;
                   }
 
                   .fxs_deployed .fa-chevron-right {
-                    display: block;
-                    position: absolute;
                     right: 2rem;
-                    top: 50%;
-                    cursor: pointer;
                   }
                 }
 
