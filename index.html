@@ -34,31 +34,24 @@
                   false
                 );
                 document.addEventListener("touchmove", handleTouchMove, false);
-
                 var xDown = null;
                 var yDown = null;
-
                 function getTouches(evt) {
                   return evt.touches || evt.originalEvent.touches;
                 }
-
                 function handleTouchStart(evt) {
                   const firstTouch = getTouches(evt)[0];
                   xDown = firstTouch.clientX;
                   yDown = firstTouch.clientY;
                 }
-
                 function handleTouchMove(evt) {
                   if (!xDown || !yDown) {
                     return;
                   }
-
                   var xUp = evt.touches[0].clientX;
                   var yUp = evt.touches[0].clientY;
-
                   var xDiff = xDown - xUp;
                   var yDiff = yDown - yUp;
-
                   if (Math.abs(xDiff) > Math.abs(yDiff)) {
                     if (xDiff > 0) {
                       slide(0);
@@ -75,27 +68,24 @@
                   xDown = null;
                   yDown = null;
                 }
-
                 function deployOnboarding() {
-                  let undeployed = document.querySelector("#fxs_undeployed");
+                  let deployed = document.querySelector("#fxs_content-deploy");
+                  let trigger = document.querySelector('#fxs_trigger-deploy');
 
-                  undeployed.style.display = "none";
+                  trigger.style.display="none";
 
-                  let deployed = document.querySelector("#fxs_deployed");
-
-                  deployed.style.display = "block";
+                  deployed.classList.remove("fxs_undeploy");
+                  deployed.classList.add("fxs_deploy");
                 }
-
                 function undeployOnboarding() {
-                  let undeployed = document.querySelector("#fxs_undeployed");
+                  let deployed = document.querySelector("#fxs_content-deploy");
+                  let trigger = document.querySelector('#fxs_trigger-deploy');
 
-                  undeployed.style.display = "flex";
+                  trigger.style.display="flex";
 
-                  let deployed = document.querySelector("#fxs_deployed");
-
-                  deployed.style.display = "none";
+                  deployed.classList.remove("fxs_deploy");
+                  deployed.classList.add("fxs_undeploy");
                 }
-
                 let position = 0;
                 let active = 1;
                 function slide(directionOrPosition) {
@@ -117,7 +107,6 @@
                     }
                   }
                   position = (active - 1) * -100;
-
                   document.querySelector(
                     ".fxs_rail_container_inner"
                   ).style.left = position + "%";
@@ -168,123 +157,84 @@
                   position: relative;
                   right: -1rem;
                 }
-
-                .fxs_undeployed {
+              
+                .fxs_content-deploy {
+                  top: 0;
+                  position: relative;
+                  z-index:2;
+                }
+                .fxs_trigger-deploy {
                   width: 100%;
-                  display: flex;
                   justify-content: space-between;
                   padding: 1rem 2rem;
-                  display: none;
                   cursor: pointer;
+                  display: none;
+                  top:0;
+                  position:relative;
+                  z-index:1;
                 }
-
-                .fxs_deployed {
-                  position: relative;
-                }
-
-                /*   .fxs_fade-in-down {
-                  -webkit-animation: fadeInDown 1s ease-in 1s forwards;
-                  -moz-animation: fadeInDown 1s ease-in 1s forwards;
-                  -o-animation: fadeInDown 1s ease-in 1s forwards;
-                  animation: fadeInDown 1s ease-in 1s forwards;
-                }
-
-                @-webkit-keyframes fadeOutUp {
+                @keyframes deploy {
                   from {
-                    -webkit-transform: translate3d(0, 0%, 0);
-                    height: auto;
-                    opacity: 1;
-                  }
-
-                  to {
-                    -webkit-transform: translate3d(0, -100%, 0);
-                    height: 0;
-                    opacity: 0;
-                  }
-                }
-
-                @-moz-keyframes fadeOutUp {
-                  from {
-                    -moz-transform: translate3d(0, 0%, 0);
-                    height: auto;
-                    opacity: 1;
+                    top: -400px;
+                    position:absolute
                   }
                   to {
-                    -moz-transform: translate3d(0, -100%, 0);
-                    height: 0;
-                    opacity: 0;
+                    top: 0;
+                    position:relative;
                   }
                 }
-
-                @-o-keyframes fadeOutUp {
+                @keyframes undeploy {
                   from {
-                    -o-transform: translate3d(0, 0%, 0);
-                    height: auto;
-                    opacity: 1;
+                    top: 0;
+                    position:relative;
                   }
                   to {
-                    -o-transform: translate3d(0, -100%, 0);
-                    height: 0;
-                    opacity: 0;
+                    top: -400px;
+                    position:absolute
                   }
                 }
 
-                @keyframes fadeOutUp {
-                  from {
-                    -webkit-transform: translate3d(0, 0%, 0);
-                    -moz-transform: translate3d(0, 0%, 0);
-                    -ms-transform: translate3d(0, 0%, 0);
-                    transform: translate3d(0, 0%, 0);
-                    height: auto;
-                    opacity: 1;
-                  }
-                  to {
-                    -webkit-transform: translate3d(0, -100%, 0);
-                    -moz-transform: translate3d(0, -100%, 0);
-                    -ms-transform: translate3d(0, -100%, 0);
-                    transform: translate3d(0, -100%, 0);
-                    height: 0;
-                    opacity: 0;
-                  }
+                .fxs_deploy {
+                  -webkit-animation: deploy .3s ease-in-out forwards;
+                  -moz-animation: deploy .3s ease-in-out forwards;
+                  -o-animation: deploy .3s ease-in-out forwards;
+                  animation: deploy .3s ease-in-out forwards;
                 }
 
-                [not-existing] {
-                  zoom: 1;
+                .fxs_undeploy {
+                  -webkit-animation: undeploy .3s ease-in-out forwards;
+                  -moz-animation: undeploy .3s ease-in-out forwards;
+                  -o-animation: undeploy .3s ease-in-out forwards;
+                  animation: undeploy .3s ease-in-out forwards;
                 }
 
-                .fxs_fade-out-up {
-                  -webkit-animation: fadeOutUp 1s ease-out 0 forwards;
-                  -moz-animation: fadeOutUp 1s ease-out 0 forwards;
-                  -o-animation: fadeOutUp 1s ease-out 0 forwards;
-                  animation: fadeOutUp 1s ease-out 0 forwards;
-                } */
-
-                .fxs_deployed .fa-times {
+                .fxs_content-deploy .fa-times {
                   position: absolute;
                   right: 1rem;
                   top: 1rem;
                 }
 
-                .fxs_deployed .fa-chevron-left,
-                .fxs_deployed .fa-chevron-right {
+                .fxs_content-deploy .fa-chevron-left,
+                .fxs_content-deploy .fa-chevron-right {
                   display: none;
                   color: black;
                 }
 
                 @media (min-width: 768px) {
-                  .fxs_deployed .fa-chevron-left,
-                  .fxs_deployed .fa-chevron-right {
+                  .fxs_content-deploy .fa-chevron-left,
+                  .fxs_content-deploy .fa-chevron-right {
                     display: block;
                     position: absolute;
                     top: 50%;
                     cursor: pointer;
                     transform: translateY(-50%);
                   }
-                  .fxs_deployed .fa-chevron-left {
+
+                  .fxs_content-deploy .fa-chevron-left {
                     left: 2rem;
                   }
 
-                  .fxs_deployed .fa-chevron-right {
+                  .fxs_content-deploy .fa-chevron-right {
                     right: 2rem;
                   }
                 }
@@ -389,22 +339,20 @@
                 class="fxs_signals_onboarding fxs_bg_highlight_icon_light_5_clr"
               >
                 <p
-                  id="fxs_undeployed"
-                  class="fxs_undeployed fxs_entryPlain_txt_large fxs_resetMargin"
+                  id="fxs_trigger-deploy"
+                  class="fxs_trigger-deploy fxs_entryPlain_txt_large fxs_resetMargin fxs_bg_highlight_icon_light_5_clr"
                   onclick="deployOnboarding();"
                   data-gtmid="features-signals-open-bar"
                 >
                   <span
                     ><strong
                       >We follow the signals in the space of trading.</strong
-                    >
-                    <br class="fxs_visible_768_iBlock" />
-                    <span> Let's travel together!</span>
-                  </span>
-                  <i class="fas fa-plus"></i>
+                    ><br class="fxs_visible_768_iBlock" /><span>
+                      Let's travel together!</span
+                    ></span
+                  ><i class="fas fa-plus"></i>
                 </p>
-
-                <div id="fxs_deployed" class="fxs_deployed">
+                <div id="fxs_content-deploy" class="fxs_content-deploy fxs_bg_highlight_icon_light_5_clr">
                   <div class="fxs_rail_container">
                     <div class="fxs_rail_container_inner">
                       <div class="fxs_slide_rail">
@@ -487,31 +435,27 @@
                     onclick="undeployOnboarding();"
                     class="fas fa-times"
                     data-gtmid="features-signals-close-bar"
-                  ></i>
-                  <i
+                  ></i
+                  ><i
                     class="fas fa-chevron-left"
                     aria-hidden="true"
                     onclick="slide(-1);"
                     data-gtmid="features-signals-previous-features-bar"
-                  ></i>
-                  <i
+                  ></i
+                  ><i
                     class="fas fa-chevron-right"
                     aria-hidden="true"
                     onclick="slide(0);"
                     data-gtmid="features-signals-next-features-bar"
                   ></i>
                   <div class="fxs_bullets">
-                    <i
-                      class="fas fa-circle"
-                      id="circle1"
-                      onclick="slide(1)"
-                    ></i>
-                    <i
+                    <i class="fas fa-circle" id="circle1" onclick="slide(1)"></i
+                    ><i
                       class="far fa-circle"
                       id="circle2"
                       onclick="slide(2)"
-                    ></i>
-                    <i
+                    ></i
+                    ><i
                       class="far fa-circle"
                       id="circle3"
                       onclick="slide(3)"
