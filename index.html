@@ -77,26 +77,23 @@
                 }
 
                 function deployOnboarding() {
-
                   let undeployed = document.querySelector("#fxs_undeployed");
 
-                  undeployed.style.display="none";
+                  undeployed.style.display = "none";
 
                   let deployed = document.querySelector("#fxs_deployed");
 
-                  deployed.style.display="block";
+                  deployed.style.display = "block";
                 }
 
                 function undeployOnboarding() {
-
                   let undeployed = document.querySelector("#fxs_undeployed");
 
-                  undeployed.style.display="flex";
+                  undeployed.style.display = "flex";
 
                   let deployed = document.querySelector("#fxs_deployed");
 
-                  deployed.style.display="none";
-
+                  deployed.style.display = "none";
                 }
 
                 let position = 0;
@@ -125,11 +122,12 @@
                     ".fxs_rail_container_inner"
                   ).style.left = position + "%";
                   let oldActiveCircle = document.querySelector(
-                    ".fas.fa-circle"
+                    ".fxs_bullets .fas.fa-circle"
                   );
                   oldActiveCircle.classList.remove("fas");
                   oldActiveCircle.classList.add("far");
-                  let circleSelector = ".fa-circle:nth-child(" + active + ")";
+                  let circleSelector =
+                    ".fxs_bullets .fa-circle:nth-child(" + active + ")";
                   let newActiveCircle = document.querySelector(circleSelector);
                   newActiveCircle.classList.remove("far");
                   newActiveCircle.classList.add("fas");
@@ -184,7 +182,7 @@
                   position: relative;
                 }
 
-              /*   .fxs_fade-in-down {
+                /*   .fxs_fade-in-down {
                   -webkit-animation: fadeInDown 1s ease-in 1s forwards;
                   -moz-animation: fadeInDown 1s ease-in 1s forwards;
                   -o-animation: fadeInDown 1s ease-in 1s forwards;
@@ -275,13 +273,13 @@
 
                 @media (min-width: 768px) {
                   .fxs_deployed .fa-chevron-left,
-                .fxs_deployed .fa-chevron-right {
-                  display: block;
+                  .fxs_deployed .fa-chevron-right {
+                    display: block;
                     position: absolute;
                     top: 50%;
                     cursor: pointer;
-                    transform:translateY(-50%);
-                }
+                    transform: translateY(-50%);
+                  }
                   .fxs_deployed .fa-chevron-left {
                     left: 2rem;
                   }
@@ -315,7 +313,7 @@
                   display: flex;
                   position: relative;
                   transition: left 1s ease-in-out;
-                  padding: .5rem 0;
+                  padding: 0.5rem 0;
                 }
 
                 .fxs_slide_rail {
@@ -387,16 +385,22 @@
                   }
                 }
               </style>
-              <div class="fxs_signals_onboarding fxs_bg_highlight_icon_light_5_clr">
+              <div
+                class="fxs_signals_onboarding fxs_bg_highlight_icon_light_5_clr"
+              >
                 <p
                   id="fxs_undeployed"
                   class="fxs_undeployed fxs_entryPlain_txt_large fxs_resetMargin"
                   onclick="deployOnboarding();"
+                  data-gtmid="features-signals-open-bar"
                 >
-                  <strong
-                    >Discover with FXStreet Signals a huge universe of trading
-                    signals!</strong
-                  >
+                  <span
+                    ><strong
+                      >We follow the signals in the space of trading.</strong
+                    >
+                    <br class="fxs_visible_768_iBlock" />
+                    <span> Let's travel together!</span>
+                  </span>
                   <i class="fas fa-plus"></i>
                 </p>
 
@@ -422,6 +426,7 @@
                           <a
                             class="fxs_btn fxs_btn_line fxs_btn_small"
                             href="https://landing.fxstreet.com/signals/v1/"
+                            data-gtmid="features-signals-more-features-bar"
                             target="_blank"
                             >Discover more features</a
                           >
@@ -446,6 +451,7 @@
                             class="fxs_btn fxs_btn_line fxs_btn_small"
                             href="https://landing.fxstreet.com/signals/v1/"
                             target="_blank"
+                            data-gtmid="features-signals-more-features-bar"
                             >Discover more features</a
                           >
                         </div>
@@ -470,22 +476,29 @@
                             class="fxs_btn fxs_btn_line fxs_btn_small"
                             href="https://landing.fxstreet.com/signals/v1/"
                             target="_blank"
+                            data-gtmid="features-signals-more-features-bar"
                             >Discover more features</a
                           >
                         </div>
                       </div>
                     </div>
                   </div>
-                  <i onclick="undeployOnboarding();" class="fas fa-times"></i>
+                  <i
+                    onclick="undeployOnboarding();"
+                    class="fas fa-times"
+                    data-gtmid="features-signals-close-bar"
+                  ></i>
                   <i
                     class="fas fa-chevron-left"
                     aria-hidden="true"
                     onclick="slide(-1);"
+                    data-gtmid="features-signals-previous-features-bar"
                   ></i>
                   <i
                     class="fas fa-chevron-right"
                     aria-hidden="true"
                     onclick="slide(0);"
+                    data-gtmid="features-signals-next-features-bar"
                   ></i>
                   <div class="fxs_bullets">
                     <i
@@ -506,6 +519,7 @@
                   </div>
                 </div>
               </div>
+              <div class="fxs_clearfix fxs_marginBase"></div>
               <!---widgetend--->
             </div>
           </main>
