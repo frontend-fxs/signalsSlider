@@ -28,6 +28,15 @@
             <div class="fxs_detail">
               <!---widget--->
               <script>
+                function checkElementsReady(){
+                  if(FXStreet.Resource.UserInfo){
+                    clearInterval(handleInterval);
+                    if(FXStreet.Resource.UserInfo.IsPremium){
+                      document.querySelector('#fxs_signals_onboarding').style.display="none";
+                    }
+                  }
+                }
+                let handleInterval = setInterval(checkElementsReady, 1000);
                 document.addEventListener(
                   "touchstart",
                   handleTouchStart,
@@ -70,21 +79,16 @@
                 }
                 function deployOnboarding() {
                   let deployed = document.querySelector("#fxs_content-deploy");
-                  let trigger = document.querySelector('#fxs_trigger-deploy');
+                  let trigger = document.querySelector("#fxs_trigger-deploy");
 
-                  trigger.style.display="none";
-
-                  deployed.classList.remove("fxs_undeploy");
-                  deployed.classList.add("fxs_deploy");
+                  deployed.style.display = "block";
+                  trigger.style.display = "none";
                 }
                 function undeployOnboarding() {
                   let deployed = document.querySelector("#fxs_content-deploy");
-                  let trigger = document.querySelector('#fxs_trigger-deploy');
-
-                  trigger.style.display="flex";
-
-                  deployed.classList.remove("fxs_deploy");
-                  deployed.classList.add("fxs_undeploy");
+                  let trigger = document.querySelector("#fxs_trigger-deploy");
+                  deployed.style.display = "none";
+                  trigger.style.display = "flex";
                 }
                 let position = 0;
                 let active = 1;
@@ -124,14 +128,16 @@
               </script>
               <style>
                 .fxs_signals_onboarding {
-                  margin: -1rem;
+                  margin: -1rem -1rem 0;
                   width: calc(100% + 2rem);
-                  display: block;
+                  display: none;
+                  position: relative;
+                  min-height: 3rem;
                 }
 
                 @media (min-width: 768px) {
                   .fxs_signals_onboarding {
-                    margin: -1.5rem;
+                    margin: -1.5rem -1.5rem 0;
                     width: calc(100% + 3rem);
                   }
                 }
@@ -157,55 +163,24 @@
                   position: relative;
                   right: -1rem;
                 }
-              
-                .fxs_content-deploy {
-                  top: 0;
-                  position: relative;
-                  z-index:2;
-                }
+
                 .fxs_trigger-deploy {
                   width: 100%;
                   justify-content: space-between;
                   padding: 1rem 2rem;
                   cursor: pointer;
-                  display: none;
-                  top:0;
-                  position:relative;
-                  z-index:1;
-                }
-                @keyframes deploy {
-                  from {
-                    top: -400px;
-                    position:absolute
-                  }
-                  to {
-                    top: 0;
-                    position:relative;
-                  }
-                }
-                @keyframes undeploy {
-                  from {
-                    top: 0;
-                    position:relative;
-                  }
-                  to {
-                    top: -400px;
-                    position:absolute
-                  }
+                  display: flex;
+                  top: 0;
+                  position: absolute;
+                  z-index: 1;
                 }
 
-                .fxs_deploy {
-                  -webkit-animation: deploy .3s ease-in-out forwards;
-                  -moz-animation: deploy .3s ease-in-out forwards;
-                  -o-animation: deploy .3s ease-in-out forwards;
-                  animation: deploy .3s ease-in-out forwards;
-                }
-
-                .fxs_undeploy {
-                  -webkit-animation: undeploy .3s ease-in-out forwards;
-                  -moz-animation: undeploy .3s ease-in-out forwards;
-                  -o-animation: undeploy .3s ease-in-out forwards;
-                  animation: undeploy .3s ease-in-out forwards;
+                .fxs_content-deploy {
+                  top: 0;
+                  position: relative;
+                  z-index: 2;
+                  overflow: hidden;
+                  max-height: auto;
                 }
 
                 .fxs_content-deploy .fa-times {
@@ -250,6 +225,7 @@
                 .fas.fa-circle,
                 .far.fa-circle {
                   font-size: 0.5rem;
+                  margin: 0 0.2rem;
                   cursor: pointer;
                 }
 
@@ -336,6 +312,7 @@
                 }
               </style>
               <div
+                id="fxs_signals_onboarding"
                 class="fxs_signals_onboarding fxs_bg_highlight_icon_light_5_clr"
               >
                 <p
@@ -352,7 +329,10 @@
                     ></span
                   ><i class="fas fa-plus"></i>
                 </p>
-                <div id="fxs_content-deploy" class="fxs_content-deploy fxs_bg_highlight_icon_light_5_clr">
+                <div
+                  id="fxs_content-deploy"
+                  class="fxs_content-deploy fxs_bg_highlight_icon_light_5_clr"
+                >
                   <div class="fxs_rail_container">
                     <div class="fxs_rail_container_inner">
                       <div class="fxs_slide_rail">
