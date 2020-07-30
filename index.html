@@ -27,423 +27,445 @@
           <main>
             <div class="fxs_detail">
               <!---widget--->
-              <script>
-                function checkElementsReady(){
-                  if(FXStreet.Resource.UserInfo){
-                    clearInterval(handleInterval);
-                    if(FXStreet.Resource.UserInfo.IsPremium){
-                      document.querySelector('#fxs_signals_onboarding').style.display="none";
-                    }
-                  }
-                }
-                let handleInterval = setInterval(checkElementsReady, 1000);
-                document.addEventListener(
-                  "touchstart",
-                  handleTouchStart,
-                  false
-                );
-                document.addEventListener("touchmove", handleTouchMove, false);
-                var xDown = null;
-                var yDown = null;
-                function getTouches(evt) {
-                  return evt.touches || evt.originalEvent.touches;
-                }
-                function handleTouchStart(evt) {
-                  const firstTouch = getTouches(evt)[0];
-                  xDown = firstTouch.clientX;
-                  yDown = firstTouch.clientY;
-                }
-                function handleTouchMove(evt) {
-                  if (!xDown || !yDown) {
-                    return;
-                  }
-                  var xUp = evt.touches[0].clientX;
-                  var yUp = evt.touches[0].clientY;
-                  var xDiff = xDown - xUp;
-                  var yDiff = yDown - yUp;
-                  if (Math.abs(xDiff) > Math.abs(yDiff)) {
-                    if (xDiff > 0) {
-                      slide(0);
-                    } else {
-                      slide(-1);
-                    }
-                  } else {
-                    if (yDiff > 0) {
-                      console.log("swipe up");
-                    } else {
-                      console.log("swipe down");
-                    }
-                  }
-                  xDown = null;
-                  yDown = null;
-                }
-                function deployOnboarding() {
-                  let deployed = document.querySelector("#fxs_content-deploy");
-                  let trigger = document.querySelector("#fxs_trigger-deploy");
-
-                  deployed.style.display = "block";
-                  trigger.style.display = "none";
-                }
-                function undeployOnboarding() {
-                  let deployed = document.querySelector("#fxs_content-deploy");
-                  let trigger = document.querySelector("#fxs_trigger-deploy");
-                  deployed.style.display = "none";
-                  trigger.style.display = "flex";
-                }
-                let position = 0;
-                let active = 1;
-                function slide(directionOrPosition) {
-                  if (directionOrPosition > 0) {
-                    active = directionOrPosition;
-                  } else {
-                    if (directionOrPosition === 0) {
-                      if (active < 3) {
-                        active++;
+              <div>
+                <script>
+                  function checkElementsReady() {
+                    if (FXStreet.Resource.UserInfo) {
+                      clearInterval(handleInterval);
+                      let onboarding = document.querySelector(
+                        "#fxs_signals_onboarding"
+                      );
+                      if (FXStreet.Resource.UserInfo.IsPremium) {
+                        onboarding.style.display = "none";
                       } else {
-                        active = 1;
-                      }
-                    } else {
-                      if (active > 1) {
-                        active--;
-                      } else {
-                        active = 3;
+                        onboarding.style.display = "block";
                       }
                     }
                   }
-                  position = (active - 1) * -100;
-                  document.querySelector(
-                    ".fxs_rail_container_inner"
-                  ).style.left = position + "%";
-                  let oldActiveCircle = document.querySelector(
-                    ".fxs_bullets .fas.fa-circle"
+                  let handleInterval = setInterval(checkElementsReady, 1000);
+                  document.addEventListener(
+                    "touchstart",
+                    handleTouchStart,
+                    false
                   );
-                  oldActiveCircle.classList.remove("fas");
-                  oldActiveCircle.classList.add("far");
-                  let circleSelector =
-                    ".fxs_bullets .fa-circle:nth-child(" + active + ")";
-                  let newActiveCircle = document.querySelector(circleSelector);
-                  newActiveCircle.classList.remove("far");
-                  newActiveCircle.classList.add("fas");
-                }
-              </script>
-              <style>
-                .fxs_signals_onboarding {
-                  margin: -1rem -1rem 0;
-                  width: calc(100% + 2rem);
-                  display: none;
-                  position: relative;
-                  min-height: 3rem;
-                }
+                  document.addEventListener(
+                    "touchmove",
+                    handleTouchMove,
+                    false
+                  );
+                  var xDown = null;
+                  var yDown = null;
+                  function getTouches(evt) {
+                    return evt.touches || evt.originalEvent.touches;
+                  }
+                  function handleTouchStart(evt) {
+                    const firstTouch = getTouches(evt)[0];
+                    xDown = firstTouch.clientX;
+                    yDown = firstTouch.clientY;
+                  }
+                  function handleTouchMove(evt) {
+                    if (!xDown || !yDown) {
+                      return;
+                    }
+                    var xUp = evt.touches[0].clientX;
+                    var yUp = evt.touches[0].clientY;
+                    var xDiff = xDown - xUp;
+                    var yDiff = yDown - yUp;
+                    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                      if (xDiff > 0) {
+                        slide(0);
+                      } else {
+                        slide(-1);
+                      }
+                    } else {
+                      if (yDiff > 0) {
+                        console.log("swipe up");
+                      } else {
+                        console.log("swipe down");
+                      }
+                    }
+                    xDown = null;
+                    yDown = null;
+                  }
+                  function deployOnboarding() {
+                    let deployed = document.querySelector(
+                      "#fxs_content-deploy"
+                    );
+                    let trigger = document.querySelector("#fxs_trigger-deploy");
 
-                @media (min-width: 768px) {
+                    deployed.style.display = "block";
+                    trigger.style.display = "none";
+                  }
+                  function undeployOnboarding() {
+                    let deployed = document.querySelector(
+                      "#fxs_content-deploy"
+                    );
+                    let trigger = document.querySelector("#fxs_trigger-deploy");
+                    deployed.style.display = "none";
+                    trigger.style.display = "flex";
+                  }
+                  let position = 0;
+                  let active = 1;
+                  function slide(directionOrPosition) {
+                    if (directionOrPosition > 0) {
+                      active = directionOrPosition;
+                    } else {
+                      if (directionOrPosition === 0) {
+                        if (active < 3) {
+                          active++;
+                        } else {
+                          active = 1;
+                        }
+                      } else {
+                        if (active > 1) {
+                          active--;
+                        } else {
+                          active = 3;
+                        }
+                      }
+                    }
+                    position = (active - 1) * -100;
+                    document.querySelector(
+                      ".fxs_rail_container_inner"
+                    ).style.left = position + "%";
+                    let oldActiveCircle = document.querySelector(
+                      ".fxs_bullets .fas.fa-circle"
+                    );
+                    oldActiveCircle.classList.remove("fas");
+                    oldActiveCircle.classList.add("far");
+                    let circleSelector =
+                      ".fxs_bullets .fa-circle:nth-child(" + active + ")";
+                    let newActiveCircle = document.querySelector(
+                      circleSelector
+                    );
+                    newActiveCircle.classList.remove("far");
+                    newActiveCircle.classList.add("fas");
+                  }
+                </script>
+                <style>
                   .fxs_signals_onboarding {
-                    margin: -1.5rem -1.5rem 0;
-                    width: calc(100% + 3rem);
+                    margin: -1rem -1rem 1rem -1rem;
+                    width: calc(100% + 2rem);
+                    display: none;
+                    position: relative;
+                    min-height: 3rem;
                   }
-                }
 
-                .fxs_signals_onboarding .fas,
-                .fxs_signals_onboarding .far {
-                  font-size: 1rem;
-                  vertical-align: middle;
-                }
-
-                @media (min-width: 768px) {
-                  .fxs_signals_onboarding .fas {
-                    font-size: 1.2rem;
+                  @media (min-width: 768px) {
+                    .fxs_signals_onboarding {
+                      margin: -1.5rem -1.5rem 1rem -1.5rem ;
+                      width: calc(100% + 3rem);
+                    }
                   }
-                }
 
-                .fxs_signals_onboarding .fa-times,
-                .fxs_signals_onboarding .fa-plus {
-                  cursor: pointer;
-                }
+                  .fxs_signals_onboarding .fas,
+                  .fxs_signals_onboarding .far {
+                    font-size: 1rem;
+                    vertical-align: middle;
+                  }
 
-                .fxs_signals_onboarding .fa-plus {
-                  position: relative;
-                  right: -1rem;
-                }
+                  @media (min-width: 768px) {
+                    .fxs_signals_onboarding .fas {
+                      font-size: 1.2rem;
+                    }
+                  }
 
-                .fxs_trigger-deploy {
-                  width: 100%;
-                  justify-content: space-between;
-                  padding: 1rem 2rem;
-                  cursor: pointer;
-                  display: flex;
-                  top: 0;
-                  position: absolute;
-                  z-index: 1;
-                }
+                  .fxs_signals_onboarding .fa-times,
+                  .fxs_signals_onboarding .fa-plus {
+                    cursor: pointer;
+                  }
 
-                .fxs_content-deploy {
-                  top: 0;
-                  position: relative;
-                  z-index: 2;
-                  overflow: hidden;
-                  max-height: auto;
-                }
+                  .fxs_signals_onboarding .fa-plus {
+                    position: relative;
+                    right: -1rem;
+                  }
 
-                .fxs_content-deploy .fa-times {
-                  position: absolute;
-                  right: 1rem;
-                  top: 1rem;
-                }
+                  .fxs_trigger-deploy {
+                    width: 100%;
+                    justify-content: space-between;
+                    padding: 1rem 2rem;
+                    cursor: pointer;
+                    display: flex;
+                    top: 0;
+                    position: absolute;
+                    z-index: 1;
+                  }
 
-                .fxs_content-deploy .fa-chevron-left,
-                .fxs_content-deploy .fa-chevron-right {
-                  display: none;
-                  color: black;
-                }
+                  .fxs_content-deploy {
+                    top: 0;
+                    position: relative;
+                    z-index: 2;
+                    overflow: hidden;
+                    max-height: auto;
+                  }
 
-                @media (min-width: 768px) {
+                  .fxs_content-deploy .fa-times {
+                    position: absolute;
+                    right: 1rem;
+                    top: 1rem;
+                  }
+
                   .fxs_content-deploy .fa-chevron-left,
                   .fxs_content-deploy .fa-chevron-right {
-                    display: block;
+                    display: none;
+                    color: black;
+                  }
+
+                  @media (min-width: 768px) {
+                    .fxs_content-deploy .fa-chevron-left,
+                    .fxs_content-deploy .fa-chevron-right {
+                      display: block;
+                      position: absolute;
+                      top: 50%;
+                      cursor: pointer;
+                      transform: translateY(-50%);
+                    }
+
+                    .fxs_content-deploy .fa-chevron-left {
+                      left: 2rem;
+                    }
+
+                    .fxs_content-deploy .fa-chevron-right {
+                      right: 2rem;
+                    }
+                  }
+
+                  .fxs_bullets {
                     position: absolute;
-                    top: 50%;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    line-height: 2rem;
+                  }
+
+                  .fas.fa-circle,
+                  .far.fa-circle {
+                    font-size: 0.5rem;
+                    margin: 0 0.2rem;
                     cursor: pointer;
-                    transform: translateY(-50%);
                   }
 
-                  .fxs_content-deploy .fa-chevron-left {
-                    left: 2rem;
+                  .fxs_rail_container {
+                    width: 100%;
+                    overflow: hidden;
                   }
 
-                  .fxs_content-deploy .fa-chevron-right {
-                    right: 2rem;
+                  .fxs_rail_container_inner {
+                    width: 300%;
+                    display: flex;
+                    position: relative;
+                    transition: left 1s ease-in-out;
+                    padding: 0.5rem 0;
                   }
-                }
 
-                .fxs_bullets {
-                  position: absolute;
-                  bottom: 0;
-                  left: 50%;
-                  transform: translateX(-50%);
-                  line-height: 2rem;
-                }
-
-                .fas.fa-circle,
-                .far.fa-circle {
-                  font-size: 0.5rem;
-                  margin: 0 0.2rem;
-                  cursor: pointer;
-                }
-
-                .fxs_rail_container {
-                  width: 100%;
-                  overflow: hidden;
-                }
-
-                .fxs_rail_container_inner {
-                  width: 300%;
-                  display: flex;
-                  position: relative;
-                  transition: left 1s ease-in-out;
-                  padding: 0.5rem 0;
-                }
-
-                .fxs_slide_rail {
-                  display: flex;
-                  width: 100%;
-                  justify-content: center;
-                  align-items: center;
-                  padding: 1rem 1rem 1.5rem 1rem;
-                }
-
-                @media (min-width: 768px) {
                   .fxs_slide_rail {
-                    padding: 1rem 10vw;
+                    display: flex;
+                    width: 100%;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 1rem 1rem 1.5rem 1rem;
                   }
-                }
 
-                .fxs_slide_rail .fxs_left {
-                  width: 80px;
-                  margin-right: 2vw;
-                  align-self: start;
-                }
+                  @media (min-width: 768px) {
+                    .fxs_slide_rail {
+                      padding: 1rem 10vw;
+                    }
+                  }
 
-                @media (min-width: 768px) {
                   .fxs_slide_rail .fxs_left {
-                    width: 200px;
-                    align-self: inherit;
+                    width: 80px;
+                    margin-right: 2vw;
+                    align-self: start;
                   }
-                }
 
-                .fxs_slide_rail .fxs_right {
-                  align-self: start;
-                }
+                  @media (min-width: 768px) {
+                    .fxs_slide_rail .fxs_left {
+                      width: 200px;
+                      align-self: inherit;
+                    }
+                  }
 
-                @media (min-width: 768px) {
                   .fxs_slide_rail .fxs_right {
-                    align-self: inherit;
+                    align-self: start;
                   }
-                }
 
-                .fxs_headline_from_medium_to_large {
-                  font-size: 0.9rem;
-                  line-height: 1.35em;
-                }
+                  @media (min-width: 768px) {
+                    .fxs_slide_rail .fxs_right {
+                      align-self: inherit;
+                    }
+                  }
 
-                @media (min-width: 768px) {
                   .fxs_headline_from_medium_to_large {
-                    font-size: 1.55rem;
-                    line-height: 1.6rem;
+                    font-size: 0.9rem;
+                    line-height: 1.35em;
                   }
-                }
 
-                .fxs_entryPlain_txt_large {
-                  font-size: 0.8rem;
-                }
+                  @media (min-width: 768px) {
+                    .fxs_headline_from_medium_to_large {
+                      font-size: 1.55rem;
+                      line-height: 1.6rem;
+                    }
+                  }
 
-                @media (min-width: 768px) {
                   .fxs_entryPlain_txt_large {
-                    font-size: 1rem;
+                    font-size: 0.8rem;
                   }
-                }
 
-                .fxs_btn.fxs_btn_line.fxs_btn_small {
-                  font-size: 0.7rem;
-                }
+                  @media (min-width: 768px) {
+                    .fxs_entryPlain_txt_large {
+                      font-size: 1rem;
+                    }
+                  }
 
-                @media (min-width: 768px) {
                   .fxs_btn.fxs_btn_line.fxs_btn_small {
-                    font-size: 0.92rem;
+                    font-size: 0.7rem;
                   }
-                }
-              </style>
-              <div
-                id="fxs_signals_onboarding"
-                class="fxs_signals_onboarding fxs_bg_highlight_icon_light_5_clr"
-              >
-                <p
-                  id="fxs_trigger-deploy"
-                  class="fxs_trigger-deploy fxs_entryPlain_txt_large fxs_resetMargin fxs_bg_highlight_icon_light_5_clr"
-                  onclick="deployOnboarding();"
-                  data-gtmid="features-signals-open-bar"
-                >
-                  <span
-                    ><strong
-                      >We follow the signals in the space of trading.</strong
-                    ><br class="fxs_visible_768_iBlock" /><span>
-                      Let's travel together!</span
-                    ></span
-                  ><i class="fas fa-plus"></i>
-                </p>
+
+                  @media (min-width: 768px) {
+                    .fxs_btn.fxs_btn_line.fxs_btn_small {
+                      font-size: 0.92rem;
+                    }
+                  }
+                </style>
                 <div
-                  id="fxs_content-deploy"
-                  class="fxs_content-deploy fxs_bg_highlight_icon_light_5_clr"
+                  id="fxs_signals_onboarding"
+                  class="fxs_signals_onboarding fxs_bg_highlight_icon_light_5_clr"
                 >
-                  <div class="fxs_rail_container">
-                    <div class="fxs_rail_container_inner">
-                      <div class="fxs_slide_rail">
-                        <img
-                          src="https://editorial.blob.core.windows.net/ico-logos/planets.svg"
-                          alt=""
-                          class="fxs_left"
-                        />
-                        <div class="fxs_right">
-                          <h2 class="fxs_headline_from_medium_to_large">
-                            FXStreet Signals Trades the Market:
-                          </h2>
-                          <p class="fxs_entryPlain_txt_large">
-                            We use multiple daily strategies
-                            <strong>running 24/7</strong> and we are in a
-                            <strong>non-stop research</strong> of the forex
-                            market to get the best trades for you
-                          </p>
-                          <a
-                            class="fxs_btn fxs_btn_line fxs_btn_small"
-                            href="https://landing.fxstreet.com/signals/v1/"
-                            data-gtmid="features-signals-more-features-bar"
-                            target="_blank"
-                            >Discover more features</a
-                          >
+                  <p
+                    id="fxs_trigger-deploy"
+                    class="fxs_trigger-deploy fxs_entryPlain_txt_large fxs_resetMargin fxs_bg_highlight_icon_light_5_clr"
+                    onclick="deployOnboarding();"
+                    data-gtmid="features-signals-open-bar"
+                  >
+                    <span
+                      ><strong
+                        >We follow the signals in the space of trading.</strong
+                      ><br class="fxs_visible_768_iBlock" /><span>
+                        Let's travel together!</span
+                      ></span
+                    ><i class="fas fa-plus"></i>
+                  </p>
+                  <div
+                    id="fxs_content-deploy"
+                    class="fxs_content-deploy fxs_bg_highlight_icon_light_5_clr"
+                  >
+                    <div class="fxs_rail_container">
+                      <div class="fxs_rail_container_inner">
+                        <div class="fxs_slide_rail">
+                          <img
+                            src="https://editorial.blob.core.windows.net/ico-logos/planets.svg"
+                            alt=""
+                            class="fxs_left"
+                          />
+                          <div class="fxs_right">
+                            <h2 class="fxs_headline_from_medium_to_large">
+                              FXStreet Signals Trades the Market:
+                            </h2>
+                            <p class="fxs_entryPlain_txt_large">
+                              We use multiple daily strategies
+                              <strong>running 24/7</strong> and we are in a
+                              <strong>non-stop research</strong> of the forex
+                              market to get the best trades for you
+                            </p>
+                            <a
+                              class="fxs_btn fxs_btn_line fxs_btn_small"
+                              href="https://landing.fxstreet.com/signals/v1/"
+                              data-gtmid="features-signals-more-features-bar"
+                              target="_blank"
+                              >Discover more features</a
+                            >
+                          </div>
                         </div>
-                      </div>
-                      <div class="fxs_slide_rail">
-                        <img
-                          class="fxs_left"
-                          src="https://editorial.blob.core.windows.net/ico-logos/astronaut.svg"
-                        />
-                        <div class="fxs_right">
-                          <h2 class="fxs_headline_from_medium_to_large">
-                            Be guided by our experts:
-                          </h2>
-                          <p class="fxs_entryPlain_txt_large">
-                            <strong>They communicate</strong> with you through
-                            our <strong>communication channel</strong> and guide
-                            you with <strong>break-down analysis</strong> and
-                            <strong>easy reports</strong>
-                          </p>
-                          <a
-                            class="fxs_btn fxs_btn_line fxs_btn_small"
-                            href="https://landing.fxstreet.com/signals/v1/"
-                            target="_blank"
-                            data-gtmid="features-signals-more-features-bar"
-                            >Discover more features</a
-                          >
+                        <div class="fxs_slide_rail">
+                          <img
+                            class="fxs_left"
+                            src="https://editorial.blob.core.windows.net/ico-logos/astronaut.svg"
+                          />
+                          <div class="fxs_right">
+                            <h2 class="fxs_headline_from_medium_to_large">
+                              Be guided by our experts:
+                            </h2>
+                            <p class="fxs_entryPlain_txt_large">
+                              <strong>They communicate</strong> with you through
+                              our <strong>communication channel</strong> and
+                              guide you with
+                              <strong>break-down analysis</strong> and
+                              <strong>easy reports</strong>
+                            </p>
+                            <a
+                              class="fxs_btn fxs_btn_line fxs_btn_small"
+                              href="https://landing.fxstreet.com/signals/v1/"
+                              target="_blank"
+                              data-gtmid="features-signals-more-features-bar"
+                              >Discover more features</a
+                            >
+                          </div>
                         </div>
-                      </div>
-                      <div class="fxs_slide_rail">
-                        <img
-                          src="https://editorial.blob.core.windows.net/ico-logos/rocket.svg"
-                          alt=""
-                          class="fxs_left"
-                        />
-                        <div class="fxs_right">
-                          <h2 class="fxs_headline_from_medium_to_large">
-                            We trade for real, in real-time:
-                          </h2>
-                          <p class="fxs_entryPlain_txt_large">
-                            <strong>We trade our signals!</strong> You need to
-                            know that all our signals are entered in verified
-                            real accounts, and this is
-                            <strong>100% provable!</strong>
-                          </p>
-                          <a
-                            class="fxs_btn fxs_btn_line fxs_btn_small"
-                            href="https://landing.fxstreet.com/signals/v1/"
-                            target="_blank"
-                            data-gtmid="features-signals-more-features-bar"
-                            >Discover more features</a
-                          >
+                        <div class="fxs_slide_rail">
+                          <img
+                            src="https://editorial.blob.core.windows.net/ico-logos/rocket.svg"
+                            alt=""
+                            class="fxs_left"
+                          />
+                          <div class="fxs_right">
+                            <h2 class="fxs_headline_from_medium_to_large">
+                              We trade for real, in real-time:
+                            </h2>
+                            <p class="fxs_entryPlain_txt_large">
+                              <strong>We trade our signals!</strong> You need to
+                              know that all our signals are entered in verified
+                              real accounts, and this is
+                              <strong>100% provable!</strong>
+                            </p>
+                            <a
+                              class="fxs_btn fxs_btn_line fxs_btn_small"
+                              href="https://landing.fxstreet.com/signals/v1/"
+                              target="_blank"
+                              data-gtmid="features-signals-more-features-bar"
+                              >Discover more features</a
+                            >
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <i
-                    onclick="undeployOnboarding();"
-                    class="fas fa-times"
-                    data-gtmid="features-signals-close-bar"
-                  ></i
-                  ><i
-                    class="fas fa-chevron-left"
-                    aria-hidden="true"
-                    onclick="slide(-1);"
-                    data-gtmid="features-signals-previous-features-bar"
-                  ></i
-                  ><i
-                    class="fas fa-chevron-right"
-                    aria-hidden="true"
-                    onclick="slide(0);"
-                    data-gtmid="features-signals-next-features-bar"
-                  ></i>
-                  <div class="fxs_bullets">
-                    <i class="fas fa-circle" id="circle1" onclick="slide(1)"></i
-                    ><i
-                      class="far fa-circle"
-                      id="circle2"
-                      onclick="slide(2)"
+                    <i
+                      onclick="undeployOnboarding();"
+                      class="fas fa-times"
+                      data-gtmid="features-signals-close-bar"
                     ></i
                     ><i
-                      class="far fa-circle"
-                      id="circle3"
-                      onclick="slide(3)"
+                      class="fas fa-chevron-left"
+                      aria-hidden="true"
+                      onclick="slide(-1);"
+                      data-gtmid="features-signals-previous-features-bar"
+                    ></i
+                    ><i
+                      class="fas fa-chevron-right"
+                      aria-hidden="true"
+                      onclick="slide(0);"
+                      data-gtmid="features-signals-next-features-bar"
                     ></i>
+                    <div class="fxs_bullets">
+                      <i
+                        class="fas fa-circle"
+                        id="circle1"
+                        onclick="slide(1)"
+                      ></i
+                      ><i
+                        class="far fa-circle"
+                        id="circle2"
+                        onclick="slide(2)"
+                      ></i
+                      ><i
+                        class="far fa-circle"
+                        id="circle3"
+                        onclick="slide(3)"
+                      ></i>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="fxs_clearfix fxs_marginBase"></div>
+
               <!---widgetend--->
             </div>
           </main>
