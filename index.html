@@ -101,7 +101,7 @@
                     active = directionOrPosition;
                   } else {
                     if (directionOrPosition === 0) {
-                      if (active < 3) {
+                      if (active < 6) {
                         active++;
                       } else {
                         active = 1;
@@ -137,32 +137,38 @@
                   display: none;
                   position: relative;
                   min-height: 3rem;
-                  background-color:#c6d4e1;
+                  background-color: #c6d4e1;
                 }
+
                 @media (min-width: 768px) {
                   .fxs_signals_onboarding {
                     margin: -1.5rem -1.5rem 1rem -1.5rem;
                     width: calc(100% + 3rem);
                   }
                 }
+
                 .fxs_signals_onboarding .fas,
                 .fxs_signals_onboarding .far {
                   font-size: 1rem;
                   vertical-align: middle;
                 }
+
                 @media (min-width: 768px) {
                   .fxs_signals_onboarding .fas {
                     font-size: 1.2rem;
                   }
                 }
+
                 .fxs_signals_onboarding .fa-times,
                 .fxs_signals_onboarding .fa-plus {
                   cursor: pointer;
                 }
+
                 .fxs_signals_onboarding .fa-plus {
                   position: relative;
                   right: -1rem;
                 }
+
                 .fxs_trigger-deploy {
                   width: 100%;
                   justify-content: space-between;
@@ -172,26 +178,30 @@
                   top: 0;
                   position: absolute;
                   z-index: 1;
-                  background-color:#c6d4e1;
+                  background-color: #c6d4e1;
                 }
+
                 .fxs_content-deploy {
                   top: 0;
                   position: relative;
                   z-index: 2;
                   overflow: hidden;
                   max-height: auto;
-                  background-color:#c6d4e1;
+                  background-color: #c6d4e1;
                 }
+
                 .fxs_content-deploy .fa-times {
                   position: absolute;
                   right: 1rem;
                   top: 1rem;
                 }
+
                 .fxs_content-deploy .fa-chevron-left,
                 .fxs_content-deploy .fa-chevron-right {
                   display: none;
                   color: black;
                 }
+
                 @media (min-width: 768px) {
                   .fxs_content-deploy .fa-chevron-left,
                   .fxs_content-deploy .fa-chevron-right {
@@ -201,13 +211,16 @@
                     cursor: pointer;
                     transform: translateY(-50%);
                   }
+
                   .fxs_content-deploy .fa-chevron-left {
                     left: 2rem;
                   }
+
                   .fxs_content-deploy .fa-chevron-right {
                     right: 2rem;
                   }
                 }
+
                 .fxs_bullets {
                   position: absolute;
                   bottom: 0;
@@ -215,25 +228,29 @@
                   transform: translateX(-50%);
                   line-height: 2rem;
                 }
+
                 .fas.fa-circle,
                 .far.fa-circle {
                   font-size: 0.5rem;
                   margin: 0 0.2rem;
                   cursor: pointer;
                 }
+
                 .fxs_rail_container {
                   width: 100%;
                   position: relative;
                   overflow: hidden;
                 }
+
                 .fxs_rail_container_inner {
-                  width: 300%;
+                  width: 600%;
                   display: flex;
                   position: relative;
                   transition: left 1s ease-in-out;
                   padding: 0.5rem 0;
                   left: 0;
                 }
+
                 .fxs_slide_rail {
                   display: flex;
                   width: 100%;
@@ -241,64 +258,72 @@
                   align-items: center;
                   padding: 1rem 1rem 1.5rem 1rem;
                 }
+
                 @media (min-width: 768px) {
                   .fxs_slide_rail {
                     padding: 1rem 10vw;
                   }
                 }
+
                 .fxs_slide_rail .fxs_left {
                   width: 80px;
                   margin-right: 2vw;
                   align-self: start;
                 }
+
                 @media (min-width: 768px) {
                   .fxs_slide_rail .fxs_left {
                     width: 200px;
                     align-self: inherit;
                   }
                 }
+
                 .fxs_slide_rail .fxs_right {
                   align-self: start;
                 }
+
                 @media (min-width: 768px) {
                   .fxs_slide_rail .fxs_right {
                     align-self: inherit;
                   }
                 }
+
                 .fxs_headline_from_medium_to_large {
                   font-size: 0.9rem;
                   line-height: 1.35em;
                 }
+
                 @media (min-width: 768px) {
                   .fxs_headline_from_medium_to_large {
                     font-size: 1.55rem;
                     line-height: 1.6rem;
                   }
                 }
+
                 .fxs_entryPlain_txt_large {
                   font-size: 0.8rem;
                 }
+
                 @media (min-width: 768px) {
                   .fxs_entryPlain_txt_large {
                     font-size: 1rem;
                   }
                 }
+
                 .fxs_btn.fxs_btn_line.fxs_btn_small {
                   font-size: 0.7rem;
                 }
+
                 @media (min-width: 768px) {
                   .fxs_btn.fxs_btn_line.fxs_btn_small {
                     font-size: 0.92rem;
                   }
                 }
               </style>
-              <div
-                id="fxs_signals_onboarding"
-                class="fxs_signals_onboarding"
-              >
+              <div id="fxs_signals_onboarding" class="fxs_signals_onboarding">
                 <p
                   id="fxs_trigger-deploy"
-                  class="fxs_trigger-deploy fxs_entryPlain_txt_large fxs_resetMargin "
+                  class="fxs_trigger-deploy fxs_entryPlain_txt_large fxs_resetMargin"
                   onclick="deployOnboarding();"
                   data-gtmid="features-signals-open-bar"
                 >
@@ -310,10 +335,7 @@
                     ></span
                   ><i class="fas fa-plus"></i>
                 </p>
-                <div
-                  id="fxs_content-deploy"
-                  class="fxs_content-deploy"
-                >
+                <div id="fxs_content-deploy" class="fxs_content-deploy">
                   <div class="fxs_rail_container">
                     <div class="fxs_rail_container_inner">
                       <div class="fxs_slide_rail">
@@ -328,11 +350,11 @@
                           </h2>
                           <p class="fxs_entryPlain_txt_large">
                             We use multiple daily strategies
-                            <strong>running 24/7</strong> and we are in a
+                            <strong> running 24/7 </strong> and we are in a
                             <strong>non-stop research</strong> of the forex
-                            market to get the best trades for you
+                            market to get the best trades in all market
+                            conditions.
                           </p>
-                         
                         </div>
                       </div>
                       <div class="fxs_slide_rail">
@@ -342,15 +364,15 @@
                         />
                         <div class="fxs_right">
                           <h2 class="fxs_headline_from_medium_to_large">
-                            Be guided by our experts:
+                            Trading with 100% FXStreet Signals:
                           </h2>
                           <p class="fxs_entryPlain_txt_large">
-                            <strong>They communicate</strong> with you through
-                            our <strong>communication channel</strong> and guide
-                            you with <strong>break-down analysis</strong> and
-                            <strong>easy reports</strong>
+                            We cover from
+                            <strong>Intra-day, to long-term trading</strong>,
+                            aiming to serve day-swingers and positional
+                            investors using 100% FXStreet proprietary
+                            strategies.
                           </p>
-                         
                         </div>
                       </div>
                       <div class="fxs_slide_rail">
@@ -361,6 +383,44 @@
                         />
                         <div class="fxs_right">
                           <h2 class="fxs_headline_from_medium_to_large">
+                            Direct communication with our experts:
+                          </h2>
+                          <p class="fxs_entryPlain_txt_large">
+                            <strong>They communicate</strong> with you through
+                            our
+                            <strong>exclusive communication channel</strong> and
+                            accompany you with
+                            <strong>break-down analysis</strong> and
+                            <strong>easy reports</strong>.
+                          </p>
+                        </div>
+                      </div>
+                      <div class="fxs_slide_rail">
+                        <img
+                          src="https://editorial.blob.core.windows.net/ico-logos/nave.svg"
+                          alt=""
+                          class="fxs_left"
+                        />
+                        <div class="fxs_right">
+                          <h2 class="fxs_headline_from_medium_to_large">
+                            Be guided by our experts:
+                          </h2>
+                          <p class="fxs_entryPlain_txt_large">
+                            <strong>They save your time and money</strong> with
+                            personalized guidance and simple language analysis
+                            explaining
+                            <strong>Macro event opportunities in advance</strong
+                            >.
+                          </p>
+                        </div>
+                      </div>
+                      <div class="fxs_slide_rail">
+                        <img
+                          class="fxs_left"
+                          src="https://editorial.blob.core.windows.net/ico-logos/astronauta-1.svg"
+                        />
+                        <div class="fxs_right">
+                          <h2 class="fxs_headline_from_medium_to_large">
                             We trade for real, in real-time:
                           </h2>
                           <p class="fxs_entryPlain_txt_large">
@@ -368,6 +428,25 @@
                             know that all our signals are entered in verified
                             real accounts, and this is
                             <strong>100% provable!</strong>
+                          </p>
+                        </div>
+                      </div>
+                      <div class="fxs_slide_rail">
+                        <img
+                          src="https://editorial.blob.core.windows.net/ico-logos/meteoritos.svg"
+                          alt=""
+                          class="fxs_left"
+                        />
+                        <div class="fxs_right">
+                          <h2 class="fxs_headline_from_medium_to_large">
+                            80% accuracy:
+                          </h2>
+                          <p class="fxs_entryPlain_txt_large">
+                            We hold an accuracy in singular strategies of
+                            <strong
+                              >more than 80% which allow us maximum
+                              profits!</strong
+                            >
                           </p>
                         </div>
                       </div>
@@ -401,6 +480,21 @@
                       class="far fa-circle"
                       id="circle3"
                       onclick="slide(3)"
+                    ></i
+                    ><i
+                      class="far fa-circle"
+                      id="circle4"
+                      onclick="slide(4)"
+                    ></i
+                    ><i
+                      class="far fa-circle"
+                      id="circle5"
+                      onclick="slide(5)"
+                    ></i
+                    ><i
+                      class="far fa-circle"
+                      id="circle6"
+                      onclick="slide(6)"
                     ></i>
                   </div>
                 </div>
